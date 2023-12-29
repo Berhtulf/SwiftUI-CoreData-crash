@@ -46,7 +46,7 @@ struct ContentView: View {
                         }
                         .tint(.green)
 
-                        Button(role: .destructive) {
+                        Button(role: .destructive) { // <-- If we remove the destructive role, app no longer crashes. See green button above
                             item.managedObjectContext?.delete(item)
                             try? viewContext.save()
                         } label: {
@@ -54,7 +54,7 @@ struct ContentView: View {
                         }
                     }
             }
-            .onDelete(perform: delete(indexes:))
+            .onDelete(perform: delete(indexes:)) // <-- ForEachs onDelete modifier works as expected
         }
         .toolbar {
             Button("Add") {
@@ -73,7 +73,7 @@ struct ContentView: View {
 }
 
 struct RowView: View {
-    @ObservedObject var item: Item
+    @ObservedObject var item: Item // <-- If we remove this, app no longer crashes, but we lose UI updates if the objects properties changes
 
     var body: some View {
         NavigationLink(value: item) {
